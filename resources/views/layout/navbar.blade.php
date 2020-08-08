@@ -1,4 +1,3 @@
-
 <nav>
 	<span> {{ auth()->check() ? auth()->user()->name : '-'}}</span>
 	||

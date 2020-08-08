@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/login','AuthController@login');
 Route::get('/register','AuthController@register');
 Route::post('/registeration-process','AuthController@registerationProcess');
@@ -19,7 +21,7 @@ Route::post('/login-process','AuthController@loginProcess');
 Route::post('/logout','AuthController@logout');
 
 Route::middleware('auth')->group(function (){
-	Route::get('/','HomeController@index');
+	Route::get('/','HomeController@index')->name('home')->middleware('verified');
 
 	Route::get('/guardians','GuardianController@index');
 	Route::get('/guardians/create','GuardianController@create');
@@ -38,7 +40,7 @@ Route::middleware('auth')->group(function (){
 
 	
 
-	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
 
 	Route::prefix('/admin')->namespace('Admin')->name('admin.')->group(function () {
@@ -52,7 +54,7 @@ Route::middleware('auth')->group(function (){
 	});
 
 });
-Auth::routes();
+Auth::routes(['verify' => true]);
 //Route::get('/', function () {	
 //    return view('welcome');
 //});
